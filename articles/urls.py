@@ -8,4 +8,8 @@ from articles import views
 
 urlpatterns = [
     re_path(r'^hello$', views.hello),
+    url(r'^create$', views.create),
+    url(r'^update$', views.update),
+    url(r'^delete$', views.delete),
+    url(r'^list$', views.list),
 ]
