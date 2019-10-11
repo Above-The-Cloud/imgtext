@@ -7,7 +7,7 @@ from articles.models import Article
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
     # listdisplay设置要显示在列表中的字段（id字段是Django模型的默认主键）
-    list_display = ('id', 'desc','source','link','author', 'ctime','mtime')
+    list_display = ('id', 'desc','source', 'org_id', 'link','author', 'ctime','mtime')
 
     #搜索字段
     # search_fields = ('id', 'user_id', 'title','label','content')

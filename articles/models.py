@@ -9,7 +9,7 @@ class Article(models.Model):
     desc = models.TextField()
     text = models.TextField()
     source = models.IntegerField()
-    org_id = models.IntegerField()
+    org_id = models.IntegerField(default=0, blank=True)
     link = models.CharField(max_length=200)
     author = models.CharField(max_length=200,blank=True, null=True)
     category1 = models.IntegerField(blank=True, null=True)
@@ -21,3 +21,6 @@ class Article(models.Model):
     status = models.IntegerField(default=1, blank=True)
     ctime = models.DateTimeField(default = timezone.now)
     mtime = models.DateTimeField(auto_now = True)
+
+    class Meta:
+        unique_together = ('source', 'org_id')

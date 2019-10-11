@@ -1,6 +1,7 @@
 import json
 import traceback
 
+from MySQLdb._exceptions import IntegrityError
 from django.core import serializers
 from django.http import HttpResponse
 
@@ -22,9 +23,10 @@ def create(request):
         params = request.POST.dict()
         dis=Article.objects.create(**params)
         res['data']['id']=dis.id
-    except:
-        traceback.print_exc()
-        return HttpResponse(json.dumps({'code': -2, 'msg': 'error-2', 'data': []}))
+    except Exception as e:
+        # traceback.print_exc()
+        print(e)
+        return HttpResponse(json.dumps({'code': -2, 'msg': e, 'data': []}))
     return HttpResponse(json.dumps(res))
 
 @csrf_exempt
@@ -33,15 +35,15 @@ def list(request):
     try:
         params = request.POST.dict()
         page=0
-        size=20
+        size=5
         if 'page' in params:
-            page=params['page']
+            page=int(params['page'])
             params.pop('page')
         if 'size' in params:
-            size=params['size']
+            size=int(params['size'])
             params.pop('size')
         params['status']=1
-        res['data']['count']=Article.objects.filter(**params).count()
+        res['data']['total']=Article.objects.filter(**params).count()
         res['data']['articles']=[]
         qset=Article.objects.filter(**params).order_by('-ctime')[page*size:(page+1)*size]
         articles=json.loads(serializers.serialize("json", qset))
@@ -50,10 +52,11 @@ def list(request):
             data_row=article['fields']
             data_row['id']=article['pk']
             del data_row['status']
-            res['data']['article'].append(data_row)
-    except:
-        traceback.print_exc()
-        return HttpResponse(json.dumps({'code': -2, 'msg': 'error-2', 'data': []}))
+            res['data']['articles'].append(data_row)
+    except Exception as e:
+        # traceback.print_exc()
+        print(e)
+        return HttpResponse(json.dumps({'code': -2, 'msg': e, 'data': []}))
     return HttpResponse(json.dumps(res))
 
 @csrf_exempt
@@ -63,9 +66,10 @@ def update(request):
         return HttpResponse(json.dumps({'code': -1, 'msg': 'error-1|unexpected params!', 'data': []}))
     try:
         Article.objects.filter(id=request.POST['id']).update(**json.loads(request.POST['update']))
-    except:
-        traceback.print_exc()
-        return HttpResponse(json.dumps({'code': -2, 'msg': 'error-2', 'data': []}))
+    except Exception as e:
+        # traceback.print_exc()
+        print(e)
+        return HttpResponse(json.dumps({'code': -2, 'msg': e, 'data': []}))
     return HttpResponse(json.dumps(res))
 
 
@@ -76,7 +80,8 @@ def delete(request):
         return HttpResponse(json.dumps({'code': -1, 'msg': 'error-1|unexpected params!', 'data': []}))
     try:
         Article.objects.filter(id=request.POST['id']).update(status=0)
-    except:
-        traceback.print_exc()
-        return HttpResponse(json.dumps({'code': -2, 'msg': 'error-2', 'data': []}))
+    except Exception as e:
+        # traceback.print_exc()
+        print(e)
+        return HttpResponse(json.dumps({'code': -2, 'msg': e, 'data': []}))
     return HttpResponse(json.dumps(res))
