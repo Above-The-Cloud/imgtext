@@ -9,13 +9,13 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-
+import json
 import os
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
+CONFIG = json.load(open(BASE_DIR+"/config.json",'r'))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -84,11 +84,11 @@ WSGI_APPLICATION = 'imgtext.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # 或者使用 mysql.connector.django
-        'NAME': 'imgtext',
-        'USER': 'wcy',
-        'PASSWORD': '123456',
-        'HOST':'127.0.0.1',
-        'PORT':'3306',
+        'NAME': CONFIG['mysql']['name'],
+        'USER': CONFIG['mysql']['user'],
+        'PASSWORD': CONFIG['mysql']['password'],
+        'HOST':CONFIG['mysql']['host'],
+        'PORT':CONFIG['mysql']['port'],
     }
 }
 
