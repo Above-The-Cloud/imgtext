@@ -6,6 +6,8 @@ from django.utils import timezone
 
 class Article(models.Model):
     cover = models.CharField(max_length=200)
+    title = models.TextField(blank=True, null=True)
+    label = models.IntegerField(blank=True, null=True)
     desc = models.TextField()
     text = models.TextField()
     source = models.IntegerField()
