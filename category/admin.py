@@ -10,7 +10,7 @@ class Category1Admin(admin.ModelAdmin):
     list_display = ('id', "name", "status", "ctime", "mtime")
 
     #搜索字段
-    # search_fields = ('id', 'user_id', 'title','label','content')
+    search_fields = ('id', 'name')
 
     # list_per_page设置每页显示多少条记录，默认是100条
     list_per_page = 50
@@ -30,7 +30,7 @@ class Category2Admin(admin.ModelAdmin):
     list_display = ('id', "father_id", "name", "status", "ctime", "mtime")
 
     #搜索字段
-    # search_fields = ('id', 'user_id', 'title','label','content')
+    search_fields = ('id', 'father_id', 'name')
 
     # list_per_page设置每页显示多少条记录，默认是100条
     list_per_page = 50
