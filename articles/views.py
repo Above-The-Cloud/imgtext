@@ -26,7 +26,7 @@ def create(request):
     except Exception as e:
         # traceback.print_exc()
         print(e)
-        return HttpResponse(json.dumps({'code': -2, 'msg': e, 'data': []}))
+        return HttpResponse(json.dumps({'code': -2, 'msg': "error|%s" % e, 'data': []}))
     return HttpResponse(json.dumps(res))
 
 @csrf_exempt
@@ -56,7 +56,7 @@ def list(request):
     except Exception as e:
         # traceback.print_exc()
         print(e)
-        return HttpResponse(json.dumps({'code': -2, 'msg': e, 'data': []}))
+        return HttpResponse(json.dumps({'code': -2, 'msg': "error|%s" % e, 'data': []}))
     return HttpResponse(json.dumps(res))
 
 @csrf_exempt
@@ -69,7 +69,7 @@ def update(request):
     except Exception as e:
         # traceback.print_exc()
         print(e)
-        return HttpResponse(json.dumps({'code': -2, 'msg': e, 'data': []}))
+        return HttpResponse(json.dumps({'code': -2, 'msg': "error|%s" % e, 'data': []}))
     return HttpResponse(json.dumps(res))
 
 
@@ -83,5 +83,5 @@ def delete(request):
     except Exception as e:
         # traceback.print_exc()
         print(e)
-        return HttpResponse(json.dumps({'code': -2, 'msg': e, 'data': []}))
+        return HttpResponse(json.dumps({'code': -2, 'msg': "error|%s" % e, 'data': []}))
     return HttpResponse(json.dumps(res))
